@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>BrainScan AI | Brain Tumor Classification</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7fb;
+
+            color: #172033;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        header {
+
+            background: white;
+
+            border-bottom:
+                1px solid #e5e9f0;
+
+            padding:
+                18px 7%;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .logo-icon {
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .logo h2 {
+
+            font-size: 20px;
+        }
+
+
+        .logo p {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+
+            max-width: 1100px;
+
+            margin:
+                45px auto 25px;
+
+            padding:
+                0 25px;
+        }
+
+
+        .hero h1 {
+
+            font-size: 38px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .hero h1 span {
+
+            color: #2563eb;
+        }
+
+
+        .hero p {
+
+            max-width: 720px;
+
+            color: #64748b;
+
+            line-height: 1.7;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding:
+                20px 25px 60px;
+        }
+
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 25px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            border:
+                1px solid #e5e9f0;
+
+            box-shadow:
+                0 5px 20px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+        }
+
+
+        .card h3 {
+
+            margin-bottom: 18px;
+
+            font-size: 18px;
+        }
+
+
+        /* ================= UPLOAD ================= */
+
+        .upload-area {
+
+            border:
+                2px dashed #cbd5e1;
+
+            border-radius: 14px;
+
+            padding:
+                45px 20px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .upload-area:hover {
+
+            border-color:
+                #2563eb;
+
+            background:
+                #f8fbff;
+        }
+
+
+        .upload-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .upload-area h4 {
+
+            margin-bottom: 8px;
+
+            font-size: 17px;
+        }
+
+
+        .upload-area p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-top: 4px;
+        }
+
+
+        #fileInput {
+
+            display: none;
+        }
+
+
+        /* ================= PREVIEW ================= */
+
+        .preview-container {
+
+            margin-top: 20px;
+
+            display: none;
+        }
+
+
+        .preview-container img {
+
+            width: 100%;
+
+            max-height: 400px;
+
+            object-fit: contain;
+
+            background: #0f172a;
+
+            border-radius: 12px;
+        }
+
+
+        .file-name {
+
+            margin-top: 10px;
+
+            font-size: 13px;
+
+            color: #64748b;
+
+            word-break: break-all;
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .analyze-btn {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .analyze-btn:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .analyze-btn:disabled {
+
+            background: #94a3b8;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================= LOADING ================= */
+
+        .loading {
+
+            display: none;
+
+            text-align: center;
+
+            padding: 35px;
+        }
+
+
+        .spinner {
+
+            width: 38px;
+
+            height: 38px;
+
+            border:
+                4px solid #e2e8f0;
+
+            border-top-color:
+                #2563eb;
+
+            border-radius: 50%;
+
+            animation:
+                spin 1s linear infinite;
+
+            margin:
+                auto auto 12px;
+        }
+
+
+        @keyframes spin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+
+        }
+
+
+        /* ================= RESULTS ================= */
+
+        .results {
+
+            display: none;
+        }
+
+
+        .prediction {
+
+            text-align: center;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            background: #f8fafc;
+
+            margin-bottom: 20px;
+        }
+
+
+        .prediction-label {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .prediction-class {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+        }
+
+
+        .confidence {
+
+            margin-top: 8px;
+
+            color: #475569;
+        }
+
+
+        /* ================= PROBABILITIES ================= */
+
+        .probability-title {
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+
+        .probability {
+
+            margin-bottom: 15px;
+        }
+
+
+        .probability-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            margin-bottom: 6px;
+
+            font-size: 13px;
+        }
+
+
+        .probability-name {
+
+            font-weight: 600;
+        }
+
+
+        .probability-value {
+
+            color: #2563eb;
+
+            font-weight: bold;
+        }
+
+
+        .progress {
+
+            height: 9px;
+
+            background: #e2e8f0;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            width: 0%;
+
+            background: #2563eb;
+
+            border-radius: 10px;
+
+            transition:
+                width 0.8s ease;
+        }
+
+
+        /* ================= API ERROR ================= */
+
+        .error {
+
+            display: none;
+
+            padding: 15px;
+
+            margin-top: 15px;
+
+            border-radius: 10px;
+
+            background: #fef2f2;
+
+            border:
+                1px solid #fecaca;
+
+            color: #b91c1c;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= DISCLAIMER ================= */
+
+        .disclaimer {
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #fff7ed;
+
+            color: #9a3412;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 800px) {
+
+            .grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .hero h1 {
+
+                font-size: 30px;
+            }
+
+
+            header {
+
+                padding:
+                    15px 5%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            MRI
+        </div>
+
+        <div>
+
+            <h2>
+                BrainScan AI
+            </h2>
+
+            <p>
+                VGG16 Brain MRI Classification
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<section class="hero">
+
+    <h1>
+        Brain MRI
+        <span>
+            Tumor Classification
+        </span>
+    </h1>
+
+    <p>
+        Upload a brain MRI image and analyze it
+        using a VGG16 deep learning model trained
+        to classify four brain MRI categories.
+    </p>
+
+</section>
+
+
+
+<main class="container">
+
+    <div class="grid">
+
+
+        <!-- ================= UPLOAD ================= -->
+
+        <div class="card">
+
+            <h3>
+                Upload MRI Scan
+            </h3>
+
+
+            <div
+                class="upload-area"
+                id="uploadArea"
+            >
+
+                <div class="upload-icon">
+                    🧠
+                </div>
+
+                <h4>
+                    Click to upload MRI
+                </h4>
+
+                <p>
+                    or drag and drop your image here
+                </p>
+
+                <p>
+                    JPG, JPEG or PNG
+                </p>
+
+            </div>
+
+
+            <input
+                type="file"
+                id="fileInput"
+                accept="image/jpeg,image/png,image/jpg"
+            >
+
+
+            <div
+                class="preview-container"
+                id="previewContainer"
+            >
+
+                <img
+                    id="previewImage"
+                    alt="MRI Preview"
+                >
+
+                <div
+                    class="file-name"
+                    id="fileName"
+                ></div>
+
+            </div>
+
+
+            <button
+                class="analyze-btn"
+                id="analyzeBtn"
+                disabled
+            >
+                Analyze MRI
+            </button>
+
+
+            <div
+                class="error"
+                id="error"
+            ></div>
+
+        </div>
+
+
+
+        <!-- ================= RESULTS ================= -->
+
+        <div class="card">
+
+            <h3>
+                Analysis Results
+            </h3>
+
+
+            <!-- Loading -->
+
+            <div
+                class="loading"
+                id="loading"
+            >
+
+                <div class="spinner"></div>
+
+                <p>
+                    Analyzing MRI scan...
+                </p>
+
+            </div>
+
+
+
+            <!-- Results -->
+
+            <div
+                class="results"
+                id="results"
+            >
+
+
+                <!-- Main Prediction -->
+
+                <div class="prediction">
+
+                    <div class="prediction-label">
+                        Predicted Class
+                    </div>
+
+                    <div
+                        class="prediction-class"
+                        id="predictionClass"
+                    >
+                        -
+                    </div>
+
+                    <div class="confidence">
+
+                        Confidence:
+
+                        <strong
+                            id="predictionConfidence"
+                        >
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Probabilities -->
+
+                <div>
+
+                    <div class="probability-title">
+
+                        Class Probabilities
+
+                    </div>
+
+
+
+                    <!-- Glioma -->
+
+                    <div class="probability">
+
+                        <div class="probability-header">
+
+                            <span class="probability-name">
+                                Glioma
+                            </span>
+
+                            <span
+                                class="probability-value"
+                                id="gliomaValue"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                id="gliomaBar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Meningioma -->
+
+                    <div class="probability">
+
+                        <div class="probability-header">
+
+                            <span class="probability-name">
+                                Meningioma
+                            </span>
+
+                            <span
+                                class="probability-value"
+                                id="meningiomaValue"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                id="meningiomaBar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- No Tumor -->
+
+                    <div class="probability">
+
+                        <div class="probability-header">
+
+                            <span class="probability-name">
+                                No Tumor
+                            </span>
+
+                            <span
+                                class="probability-value"
+                                id="notumorValue"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                id="notumorBar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Pituitary -->
+
+                    <div class="probability">
+
+                        <div class="probability-header">
+
+                            <span class="probability-name">
+                                Pituitary
+                            </span>
+
+                            <span
+                                class="probability-value"
+                                id="pituitaryValue"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                id="pituitaryBar"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="disclaimer">
+
+                This system is intended for
+                research and educational purposes
+                only. It is not a substitute for
+                professional medical diagnosis.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================
+   CONFIGURATION
+========================================= */
+
+
+const API_URL =
+    "http://127.0.0.1:8000/predict";
+
+
+/*
+   Later, when you deploy your FastAPI backend,
+   replace the URL above with your deployed API.
+
+   Example:
+
+   const API_URL =
+       "https://your-api.onrender.com/predict";
+*/
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+
+const fileInput =
+    document.getElementById(
+        "fileInput"
+    );
+
+
+const uploadArea =
+    document.getElementById(
+        "uploadArea"
+    );
+
+
+const previewContainer =
+    document.getElementById(
+        "previewContainer"
+    );
+
+
+const previewImage =
+    document.getElementById(
+        "previewImage"
+    );
+
+
+const fileName =
+    document.getElementById(
+        "fileName"
+    );
+
+
+const analyzeBtn =
+    document.getElementById(
+        "analyzeBtn"
+    );
+
+
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+
+const results =
+    document.getElementById(
+        "results"
+    );
+
+
+const errorBox =
+    document.getElementById(
+        "error"
+    );
+
+
+let selectedFile = null;
+
+
+
+/* =========================================
+   FILE SELECTION
+========================================= */
+
+
+fileInput.addEventListener(
+    "change",
+    function () {
+
+        if (
+            this.files.length === 0
+        ) {
+            return;
+        }
+
+        selectedFile =
+            this.files[0];
+
+        showPreview(
+            selectedFile
+        );
+
+    }
+);
+
+
+
+/* =========================================
+   UPLOAD AREA
+========================================= */
+
+
+uploadArea.addEventListener(
+    "click",
+    function () {
+
+        fileInput.click();
+
+    }
+);
+
+
+
+/* =========================================
+   DRAG OVER
+========================================= */
+
+
+uploadArea.addEventListener(
+    "dragover",
+    function (event) {
+
+        event.preventDefault();
+
+        uploadArea.style.borderColor =
+            "#2563eb";
+
+    }
+);
+
+
+
+/* =========================================
+   DRAG LEAVE
+========================================= */
+
+
+uploadArea.addEventListener(
+    "dragleave",
+    function () {
+
+        uploadArea.style.borderColor =
+            "#cbd5e1";
+
+    }
+);
+
+
+
+/* =========================================
+   DROP
+========================================= */
+
+
+uploadArea.addEventListener(
+    "drop",
+    function (event) {
+
+        event.preventDefault();
+
+        uploadArea.style.borderColor =
+            "#cbd5e1";
+
+
+        if (
+            event.dataTransfer.files.length
+            === 0
+        ) {
+            return;
+        }
+
+
+        selectedFile =
+            event.dataTransfer.files[0];
+
+
+        showPreview(
+            selectedFile
+        );
+
+    }
+);
+
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+
+function showPreview(file) {
+
+
+    if (
+        !file.type.startsWith(
+            "image/"
+        )
+    ) {
+
+        showError(
+            "Please upload a valid MRI image."
+        );
+
+        return;
+    }
+
+
+    hideError();
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+        function (event) {
+
+            previewImage.src =
+                event.target.result;
+
+
+            previewContainer.style.display =
+                "block";
+
+
+            fileName.textContent =
+                file.name;
+
+
+            analyzeBtn.disabled =
+                false;
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
+
+}
+
+
+
+/* =========================================
+   ANALYZE
+========================================= */
+
+
+analyzeBtn.addEventListener(
+    "click",
+    async function () {
+
+
+        if (!selectedFile) {
+
+            return;
+
+        }
+
+
+        loading.style.display =
+            "block";
+
+
+        results.style.display =
+            "none";
+
+
+        analyzeBtn.disabled =
+            true;
+
+
+        hideError();
+
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "file",
+            selectedFile
+        );
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    API_URL,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "API request failed."
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            displayResults(
+                data
+            );
+
+
+        }
+        catch (error) {
+
+
+            console.error(
+                error
+            );
+
+
+            showError(
+                "Unable to connect to the prediction API. " +
+                "Please make sure the FastAPI backend is running."
+            );
+
+        }
+        finally {
+
+
+            loading.style.display =
+                "none";
+
+
+            analyzeBtn.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+
+/* =========================================
+   DISPLAY RESULTS
+========================================= */
+
+
+function displayResults(data) {
+
+
+    results.style.display =
+        "block";
+
+
+    /*
+       Expected API response:
+
+       {
+           "prediction": "glioma",
+           "confidence": 89.42,
+           "probabilities": {
+               "glioma": 89.42,
+               "meningioma": 4.21,
+               "notumor": 2.13,
+               "pituitary": 4.24
+           }
+       }
+    */
+
+
+    const prediction =
+        data.prediction;
+
+
+    const confidence =
+        Number(
+            data.confidence
+        );
+
+
+    document.getElementById(
+        "predictionClass"
+    ).textContent =
+        formatClassName(
+            prediction
+        );
+
+
+    document.getElementById(
+        "predictionConfidence"
+    ).textContent =
+        confidence.toFixed(2)
+        + "%";
+
+
+    const probabilities =
+        data.probabilities || {};
+
+
+    updateProbability(
+        "glioma",
+        probabilities.glioma
+    );
+
+
+    updateProbability(
+        "meningioma",
+        probabilities.meningioma
+    );
+
+
+    updateProbability(
+        "notumor",
+        probabilities.notumor
+    );
+
+
+    updateProbability(
+        "pituitary",
+        probabilities.pituitary
+    );
+
+}
+
+
+
+/* =========================================
+   UPDATE PROBABILITY
+========================================= */
+
+
+function updateProbability(
+    className,
+    value
+) {
+
+
+    const probability =
+        Number(value || 0);
+
+
+    document.getElementById(
+        className + "Value"
+    ).textContent =
+        probability.toFixed(2)
+        + "%";
+
+
+    document.getElementById(
+        className + "Bar"
+    ).style.width =
+        Math.min(
+            probability,
+            100
+        ) + "%";
+
+}
+
+
+
+/* =========================================
+   FORMAT CLASS NAME
+========================================= */
+
+
+function formatClassName(
+    name
+) {
+
+
+    if (!name) {
+
+        return "Unknown";
+
+    }
+
+
+    if (
+        name.toLowerCase()
+        === "notumor"
+    ) {
+
+        return "No Tumor";
+
+    }
+
+
+    return name.charAt(0)
+        .toUpperCase()
+        + name.slice(1);
+
+}
+
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+
+function showError(
+    message
+) {
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
+
+}
+
+
+
+function hideError() {
+
+    errorBox.style.display =
+        "none";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
