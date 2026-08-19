@@ -107,7 +107,7 @@ VGG16 improved test accuracy by **17.12 percentage points** over the custom CNN 
 
 ### VGG16 Training Curves
 <p align="center">
-  <img src="images/vgg16_accuracy.jpg" width="500" alt="VGG16 Training and Validation Accuracy">
+  <img src="images/train_.jpg" width="500" alt="VGG16 Training and Validation Accuracy">
 </p>
 <p align="center">
   <img src="images/vgg16_loss.jpg" width="500" alt="VGG16 Training and Validation Loss">
