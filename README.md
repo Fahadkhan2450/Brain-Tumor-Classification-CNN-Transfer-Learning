@@ -105,26 +105,26 @@ VGG16 leverages convolutional features pretrained on ImageNet, with the classifi
 
 VGG16 improved test accuracy by **17.12 percentage points** over the custom CNN baseline.
 
-### VGG16 Training Curves
+### VGG16 Training And Validation Curves
 <p align="center">
   <img src="images/train_.jpg" width="500" alt="VGG16 Training and Validation Accuracy">
-</p>
-<p align="center">
-  <img src="images/vgg16_loss.jpg" width="500" alt="VGG16 Training and Validation Loss">
 </p>
 
 ### VGG16 Confusion Matrix
 <p align="center">
-  <img src="images/vgg16_confusion_matrix.jpg" width="500" alt="VGG16 Confusion Matrix">
+  <img src="images/conf.jpg" width="500" alt="VGG16 Confusion Matrix">
 </p>
 
 ### VGG16 Classification Report
 <p align="center">
-  <img src="images/vgg16_classification_report.jpg" width="500" alt="VGG16 Classification Report">
+  <img src="images/classi.jpg" width="500" alt="VGG16 Classification Report">
 </p>
 
 The VGG16 model demonstrated markedly stronger classification performance across all four tumor categories relative to the CNN baseline.
 
+<p align="center">
+  <img src="images/2.jpg" width="500" alt="VGG16 Classification Report">
+</p>
 ---
 
 ## 5. Model Configuration
