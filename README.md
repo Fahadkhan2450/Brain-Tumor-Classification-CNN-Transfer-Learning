@@ -9,13 +9,6 @@
   <img src="images/1.jpg" width="500" alt="Brain MRI Tumor Classification">
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10-blue" alt="Python">
-  <img src="https://img.shields.io/badge/TensorFlow-Keras-orange" alt="TensorFlow">
-  <img src="https://img.shields.io/badge/Model-VGG16-green" alt="VGG16">
-  <img src="https://img.shields.io/badge/Accuracy-93.56%25-brightgreen" alt="Accuracy">
-</p>
-
 ---
 
 ## Table of Contents
