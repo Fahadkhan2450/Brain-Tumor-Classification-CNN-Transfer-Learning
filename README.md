@@ -5,10 +5,6 @@
   against <b>VGG16 Transfer Learning</b> for four-class brain tumor classification from MRI scans.
 </p>
 
-<p align="center">
-  <img src="images/1.jpg" width="500" alt="Brain MRI Tumor Classification">
-</p>
-
 ---
 
 ## Table of Contents
